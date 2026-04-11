@@ -11,6 +11,7 @@ class Settings(BaseSettings):
 
     # Database
     DATABASE_URL: str = "postgresql://postgres:postgres@localhost:5432/portfolio"
+    DATABASE_PUBLIC_URL: str = ""
 
     # Security
     SECRET_KEY: str = "super-secret-key-change-in-production"
@@ -35,5 +36,5 @@ class Settings(BaseSettings):
 
     class Config:
         env_file = ".env"
-        case_sensitive = True
+        case_sensitive = False
         extra = "ignore"

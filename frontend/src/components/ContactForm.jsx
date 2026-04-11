@@ -14,6 +14,44 @@ function ContactForm() {
   const [errorMsg, setErrorMsg] = useState('');
   const { ref, isVisible } = useScrollAnimation();
 
+  // Safely define social links if profile exists
+  const socialLinks = profile ? [
+    { icon: FaGithub, href: profile.github_url, label: 'GitHub' },
+    { icon: FaLinkedin, href: profile.linkedin_url, label: 'LinkedIn' },
+  ].filter(link => link.href) : [];
+
+  // Safely define contact info if profile exists
+  const contactInfo = profile ? [
+    { icon: HiMail, text: profile.email, label: 'Email' },
+    { icon: HiLocationMarker, text: 'Brasil', label: 'Local' },
+    { icon: HiPhone, text: 'Disponível para propostas', label: 'Status' },
+  ] : [];
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('loading');
+    setErrorMsg('');
+
+    try {
+      await sendContactMessage(formData);
+      setStatus('success');
+      setFormData({ name: '', email: '', message: '' });
+      setTimeout(() => setStatus('idle'), 5000);
+    } catch (err) {
+      setStatus('error');
+      setErrorMsg(
+        err.response?.data?.detail?.[0]?.msg ||
+        err.response?.data?.detail ||
+        'Erro ao enviar mensagem. Tente novamente.'
+      );
+      setTimeout(() => setStatus('idle'), 5000);
+    }
+  };
+
   return (
     <section id="contact" className="relative">
       <div className="section-container" ref={ref}>
