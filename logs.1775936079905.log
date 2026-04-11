@@ -1,0 +1,279 @@
+2026-04-11T19:29:32.451113540Z [inf]  
+2026-04-11T19:29:33.209904998Z [inf]  [35m[Region: us-west1][0m
+2026-04-11T19:29:33.222693898Z [err]  INFO No package manager inferred, using npm default
+2026-04-11T19:29:33.222728852Z [err]  
+2026-04-11T19:29:33.277063606Z [inf]  
+2026-04-11T19:29:33.277108552Z [inf]  [38;2;125;86;243m╭─────────────────╮[0m
+2026-04-11T19:29:33.277113722Z [inf]  [38;2;125;86;243m│[0m Railpack 0.23.0 [38;2;125;86;243m│[0m
+2026-04-11T19:29:33.277117684Z [inf]  [38;2;125;86;243m╰─────────────────╯[0m
+2026-04-11T19:29:33.277124157Z [inf]  
+2026-04-11T19:29:33.277128753Z [inf]  [97m↳ Detected Node[0m
+2026-04-11T19:29:33.277132593Z [inf]  [97m↳ Using npm package manager[0m
+2026-04-11T19:29:33.277136675Z [inf]  
+2026-04-11T19:29:33.277140490Z [inf]  [1mPackages[0m
+2026-04-11T19:29:33.277144753Z [inf]  [38;5;238m──────────[0m
+2026-04-11T19:29:33.277149017Z [inf]  [95mnode[0m  [38;5;238m│[0m  [96m20.20.2[0m  [38;5;238m│[0m  idiomatic-version-file (20.20.2)
+2026-04-11T19:29:33.277153053Z [inf]  
+2026-04-11T19:29:33.277156850Z [inf]  [1mSteps[0m
+2026-04-11T19:29:33.277160880Z [inf]  [38;5;238m──────────[0m
+2026-04-11T19:29:33.277164810Z [inf]  [95m▸ install[0m
+2026-04-11T19:29:33.277168640Z [inf]  [38;5;245m$[0m [1mnpm ci[0m
+2026-04-11T19:29:33.277172733Z [inf]  
+2026-04-11T19:29:33.277176825Z [inf]  [95m▸ build[0m
+2026-04-11T19:29:33.277180617Z [inf]  [38;5;245m$[0m [1mnpm run build[0m
+2026-04-11T19:29:33.277184362Z [inf]  
+2026-04-11T19:29:33.277188187Z [inf]  [1mDeploy[0m
+2026-04-11T19:29:33.277192140Z [inf]  [38;5;238m──────────[0m
+2026-04-11T19:29:33.277196890Z [inf]  [38;5;245m$[0m [1mnpm run start[0m
+2026-04-11T19:29:33.277200874Z [inf]  
+2026-04-11T19:29:33.277204660Z [inf]  
+2026-04-11T19:29:33.278443250Z [inf]  Successfully prepared Railpack plan for build
+2026-04-11T19:29:33.278483471Z [inf]  
+2026-04-11T19:29:33.278492634Z [inf]  
+2026-04-11T19:29:33.278883788Z [inf]  context: hmwj-Mupt
+2026-04-11T19:29:33.460185692Z [inf]  [internal] load build definition from railpack-plan.json
+2026-04-11T19:29:33.460361788Z [inf]  [internal] load build definition from railpack-plan.json
+2026-04-11T19:29:33.460427502Z [inf]  [internal] load build definition from railpack-plan.json
+2026-04-11T19:29:33.470829470Z [inf]  [internal] load build definition from railpack-plan.json
+2026-04-11T19:29:33.472506051Z [inf]  resolve image config for docker-image://ghcr.io/railwayapp/railpack-frontend:v0.23.0
+2026-04-11T19:29:33.698901076Z [inf]  resolve image config for docker-image://ghcr.io/railwayapp/railpack-frontend:v0.23.0
+2026-04-11T19:29:33.698971907Z [inf]  docker-image://ghcr.io/railwayapp/railpack-frontend:v0.23.0@sha256:ba4c430961d9ee3215c64807727a4b11e2198daac31250e9db9eaf9cee4624d6
+2026-04-11T19:29:33.699524585Z [inf]  docker-image://ghcr.io/railwayapp/railpack-frontend:v0.23.0@sha256:ba4c430961d9ee3215c64807727a4b11e2198daac31250e9db9eaf9cee4624d6
+2026-04-11T19:29:33.704103312Z [inf]  docker-image://ghcr.io/railwayapp/railpack-frontend:v0.23.0@sha256:ba4c430961d9ee3215c64807727a4b11e2198daac31250e9db9eaf9cee4624d6
+2026-04-11T19:29:33.705871248Z [inf]  docker-image://ghcr.io/railwayapp/railpack-frontend:v0.23.0@sha256:ba4c430961d9ee3215c64807727a4b11e2198daac31250e9db9eaf9cee4624d6
+2026-04-11T19:29:33.803947452Z [inf]  load build definition from railpack-plan.json
+2026-04-11T19:29:33.804011127Z [inf]  load build definition from railpack-plan.json
+2026-04-11T19:29:33.804178930Z [inf]  load build definition from railpack-plan.json
+2026-04-11T19:29:33.822914462Z [inf]  load build definition from railpack-plan.json
+2026-04-11T19:29:34.219469010Z [inf]  copy /usr/local/bin/mise
+2026-04-11T19:29:34.219517175Z [inf]  copy /mise/installs
+2026-04-11T19:29:34.219526488Z [inf]  copy /mise/shims
+2026-04-11T19:29:34.219535283Z [inf]  install mise packages: node
+2026-04-11T19:29:34.219544688Z [inf]  create mise config
+2026-04-11T19:29:34.219553259Z [inf]  mkdir /etc/mise
+2026-04-11T19:29:34.219560370Z [inf]  copy .nvmrc
+2026-04-11T19:29:34.219568045Z [inf]  loading .
+2026-04-11T19:29:34.219575116Z [inf]  docker-image://ghcr.io/railwayapp/railpack-builder:mise-2026.3.17
+2026-04-11T19:29:34.219582130Z [inf]  install apt packages: libatomic1
+2026-04-11T19:29:34.219608461Z [inf]  docker-image://ghcr.io/railwayapp/railpack-runtime:mise-2026.3.17
+2026-04-11T19:29:34.219624740Z [inf]  copy /root/.local/state/mise
+2026-04-11T19:29:34.219635185Z [inf]  copy /etc/mise/config.toml
+2026-04-11T19:29:34.219659042Z [inf]  copy / /app
+2026-04-11T19:29:34.219666968Z [inf]  npm ci
+2026-04-11T19:29:34.219673835Z [inf]  copy package.json
+2026-04-11T19:29:34.219680780Z [inf]  copy package-lock.json
+2026-04-11T19:29:34.219687761Z [inf]  copy .nvmrc
+2026-04-11T19:29:34.219696343Z [inf]  mkdir -p /app/node_modules/.cache
+2026-04-11T19:29:34.219730610Z [inf]  [railpack] merge $packages:apt:runtime, $packages:mise, $build, $build
+2026-04-11T19:29:34.219753403Z [inf]  copy /app
+2026-04-11T19:29:34.219761535Z [inf]  copy /root/.cache
+2026-04-11T19:29:34.219768576Z [inf]  copy /app/node_modules
+2026-04-11T19:29:34.219775840Z [inf]  npm run build
+2026-04-11T19:29:34.219784214Z [inf]  [railpack] secrets hash
+2026-04-11T19:29:34.219801337Z [inf]  loading .
+2026-04-11T19:29:34.219808107Z [inf]  docker-image://ghcr.io/railwayapp/railpack-runtime:mise-2026.3.17
+2026-04-11T19:29:34.219815041Z [inf]  docker-image://ghcr.io/railwayapp/railpack-builder:mise-2026.3.17
+2026-04-11T19:29:34.219821891Z [inf]  [railpack] secrets hash
+2026-04-11T19:29:34.435408838Z [inf]  docker-image://ghcr.io/railwayapp/railpack-runtime:mise-2026.3.17
+2026-04-11T19:29:34.435610259Z [inf]  docker-image://ghcr.io/railwayapp/railpack-runtime:mise-2026.3.17
+2026-04-11T19:29:34.435784680Z [inf]  install apt packages: libatomic1
+2026-04-11T19:29:34.442030427Z [inf]  docker-image://ghcr.io/railwayapp/railpack-builder:mise-2026.3.17
+2026-04-11T19:29:34.442400785Z [inf]  docker-image://ghcr.io/railwayapp/railpack-builder:mise-2026.3.17
+2026-04-11T19:29:34.442430353Z [inf]  [railpack] secrets hash
+2026-04-11T19:29:34.442442572Z [inf]  loading .
+2026-04-11T19:29:34.452661049Z [inf]  [railpack] secrets hash
+2026-04-11T19:29:34.466290145Z [inf]  loading .
+2026-04-11T19:29:34.467336633Z [inf]  copy .nvmrc
+2026-04-11T19:29:34.480447415Z [inf]  copy .nvmrc
+2026-04-11T19:29:34.481461681Z [inf]  mkdir /etc/mise
+2026-04-11T19:29:34.491748598Z [inf]  mkdir /etc/mise
+2026-04-11T19:29:34.492562098Z [inf]  create mise config
+2026-04-11T19:29:34.504264883Z [inf]  create mise config
+2026-04-11T19:29:34.505265911Z [inf]  install mise packages: node
+2026-04-11T19:29:34.59804191Z [inf]  Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+
+2026-04-11T19:29:34.621546802Z [inf]  Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+
+2026-04-11T19:29:34.630470352Z [inf]  Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [48.0 kB]
+
+2026-04-11T19:29:34.686088874Z [inf]  Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8792 kB]
+
+2026-04-11T19:29:34.762929382Z [inf]  Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [6924 B]
+
+2026-04-11T19:29:34.780904839Z [inf]  Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [294 kB]
+
+2026-04-11T19:29:34.840625716Z [inf]  mise node@20.20.2    [1/3] install
+
+2026-04-11T19:29:34.841791958Z [inf]  mise node@20.20.2    [1/3] download node-v20.20.2-linux-x64.tar.gz
+
+2026-04-11T19:29:35.181906037Z [inf]  mise node@20.20.2    [2/3] generate checksum node-v20.20.2-linux-x64.tar.gz
+
+2026-04-11T19:29:35.199073444Z [inf]  mise node@20.20.2    [3/3] extract node-v20.20.2-linux-x64.tar.gz
+
+2026-04-11T19:29:35.821231671Z [inf]  Fetched 9347 kB in 1s (7533 kB/s)
+Reading package lists...
+2026-04-11T19:29:35.936591413Z [inf]  mise node@20.20.2    [3/3] node -v
+
+2026-04-11T19:29:35.941291477Z [inf]  mise node@20.20.2    [3/3] v20.20.2
+
+2026-04-11T19:29:35.942015973Z [inf]  mise node@20.20.2    [3/3] npm -v
+
+2026-04-11T19:29:36.04540536Z [inf]  mise node@20.20.2    [3/3] 10.8.2
+
+2026-04-11T19:29:36.064250522Z [inf]  mise node@20.20.2  ✓ installed
+
+2026-04-11T19:29:36.199345573Z [inf]  install mise packages: node
+2026-04-11T19:29:36.200451132Z [inf]  mkdir -p /app/node_modules/.cache
+2026-04-11T19:29:36.330927907Z [inf]  
+
+2026-04-11T19:29:36.340702435Z [inf]  mkdir -p /app/node_modules/.cache
+2026-04-11T19:29:36.341505602Z [inf]  copy .nvmrc
+2026-04-11T19:29:36.350904178Z [inf]  Reading package lists...
+2026-04-11T19:29:36.353744534Z [inf]  copy .nvmrc
+2026-04-11T19:29:36.354874737Z [inf]  copy package-lock.json
+2026-04-11T19:29:36.366397182Z [inf]  copy package-lock.json
+2026-04-11T19:29:36.367443925Z [inf]  copy package.json
+2026-04-11T19:29:36.431662315Z [inf]  copy package.json
+2026-04-11T19:29:36.432683380Z [inf]  npm ci
+2026-04-11T19:29:36.639067363Z [inf]  npm warn config production Use `--omit=dev` instead.
+
+2026-04-11T19:29:36.866983882Z [inf]  
+
+2026-04-11T19:29:36.882159637Z [inf]  Building dependency tree...
+2026-04-11T19:29:37.021817349Z [inf]  
+Reading state information...
+2026-04-11T19:29:37.022184954Z [inf]  
+
+2026-04-11T19:29:37.177025814Z [inf]  The following NEW packages will be installed:
+
+2026-04-11T19:29:37.17773818Z [inf]    libatomic1
+
+2026-04-11T19:29:37.209357033Z [inf]  0 upgraded, 1 newly installed, 0 to remove and 2 not upgraded.
+Need to get 9376 B of archives.
+After this operation, 46.1 kB of additional disk space will be used.
+Get:1 http://deb.debian.org/debian bookworm/main amd64 libatomic1 amd64 12.2.0-14+deb12u1 [9376 B]
+
+2026-04-11T19:29:37.312114780Z [inf]  copy /mise/shims
+2026-04-11T19:29:37.312165333Z [inf]  copy /mise/installs
+2026-04-11T19:29:37.312178361Z [inf]  copy /usr/local/bin/mise
+2026-04-11T19:29:37.312187219Z [inf]  copy /etc/mise/config.toml
+2026-04-11T19:29:37.312203104Z [inf]  copy /root/.local/state/mise
+2026-04-11T19:29:37.338287907Z [inf]  copy /root/.local/state/mise
+2026-04-11T19:29:37.365361092Z [inf]  debconf: delaying package configuration, since apt-utils is not installed
+
+2026-04-11T19:29:37.391683148Z [inf]  Fetched 9376 B in 0s (362 kB/s)
+
+2026-04-11T19:29:37.406252328Z [inf]  Selecting previously unselected package libatomic1:amd64.
+(Reading database ... 
+2026-04-11T19:29:37.407395749Z [inf]  (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%
+2026-04-11T19:29:37.412053522Z [inf]  (Reading database ... 75%
+2026-04-11T19:29:37.414861Z [inf]  (Reading database ... 80%
+2026-04-11T19:29:37.417297234Z [inf]  (Reading database ... 85%
+2026-04-11T19:29:37.420047307Z [inf]  (Reading database ... 90%
+2026-04-11T19:29:37.422403634Z [inf]  (Reading database ... 95%
+2026-04-11T19:29:37.426463726Z [inf]  (Reading database ... 100%(Reading database ... 6623 files and directories currently installed.)
+
+2026-04-11T19:29:37.42691404Z [inf]  Preparing to unpack .../libatomic1_12.2.0-14+deb12u1_amd64.deb ...
+
+2026-04-11T19:29:37.429428423Z [inf]  Unpacking libatomic1:amd64 (12.2.0-14+deb12u1) ...
+
+2026-04-11T19:29:37.44691345Z [inf]  Setting up libatomic1:amd64 (12.2.0-14+deb12u1) ...
+
+2026-04-11T19:29:37.450135416Z [inf]  Processing triggers for libc-bin (2.36-9+deb12u13) ...
+
+2026-04-11T19:29:37.498533029Z [inf]  install apt packages: libatomic1
+2026-04-11T19:29:38.042477027Z [inf]  npm error code EUSAGE
+
+2026-04-11T19:29:38.042670848Z [inf]  npm error
+npm error `npm ci` can only install packages when your package.json and package-lock.json or npm-shrinkwrap.json are in sync. Please update your lock file with `npm install` before continuing.
+npm error
+npm error Missing: serve@14.2.6 from lock file
+npm error Missing: @zeit/schemas@2.36.0 from lock file
+npm error Missing: ajv@8.18.0 from lock file
+npm error Missing: boxen@7.0.0 from lock file
+npm error Missing: chalk@5.0.1 from lock file
+npm error Missing: chalk-template@0.4.0 from lock file
+npm error Missing: clipboardy@3.0.0 from lock file
+npm error Missing: compression@1.8.1 from lock file
+npm error Missing: is-port-reachable@4.0.0 from lock file
+npm error Missing: serve-handler@6.1.7 from lock file
+npm error Missing: update-check@1.5.4 from lock file
+npm error Missing: ansi-align@3.0.1 from lock file
+npm error Missing: camelcase@7.0.1 from lock file
+npm error Missing: chalk@5.6.2 from lock file
+npm error Missing: cli-boxes@3.0.0 from lock file
+npm error Missing: string-width@5.1.2 from lock file
+npm error Missing: type-fest@2.19.0 from lock file
+npm error Missing: widest-line@4.0.1 from lock file
+npm error Missing: wrap-ansi@8.1.0 from lock file
+npm error Missing: string-width@4.2.3 from lock file
+npm error Missing: arch@2.2.0 from lock file
+npm error Missing: execa@5.1.1 from lock file
+npm error Missing: is-wsl@2.2.0 from lock file
+npm error Missing: bytes@3.1.2 from lock file
+npm error Missing: compressible@2.0.18 from lock file
+npm error Missing: debug@2.6.9 from lock file
+npm error Missing: negotiator@0.6.4 from lock file
+npm error Missing: on-headers@1.1.0 from lock file
+npm error Missing: safe-buffer@5.2.1 from lock file
+npm error Missing: vary@1.1.2 from lock file
+npm error Missing: get-stream@6.0.1 from lock file
+npm error Missing: human-signals@2.1.0 from lock file
+npm error Missing: is-stream@2.0.1 from lock file
+npm error Missing: merge-stream@2.0.0 from lock file
+npm error Missing: npm-run-path@4.0.1 from lock file
+npm error Missing: onetime@5.1.2 from lock file
+npm error Missing: signal-exit@3.0.7 from lock file
+npm error Missing: strip-final-newline@2.0.0 from lock file
+npm error Missing: is-docker@2.2.1 from lock file
+npm error Missing: mimic-fn@2.1.0 from lock file
+npm error Missing: bytes@3.0.0 from lock file
+npm error Missing: content-disposition@0.5.2 from lock file
+npm error Missing: mime-types@2.1.18 from lock file
+npm error Missing: path-is-inside@1.0.2 from lock file
+npm error Missing: path-to-regexp@3.3.0 from lock file
+npm error Missing: range-parser@1.2.0 from lock file
+npm error Missing: eastasianwidth@0.2.0 from lock file
+npm error Missing: emoji-regex@9.2.2 from lock file
+npm error Missing: strip-ansi@7.2.0 from lock file
+npm error Missing: ansi-regex@6.2.2 from lock file
+npm error Missing: registry-auth-token@3.3.2 from lock file
+npm error Missing: registry-url@3.1.0 from lock file
+npm error Missing: rc@1.2.8 from lock file
+npm error Missing: deep-extend@0.6.0 from lock file
+npm error Missing: ini@1.3.8 from lock file
+npm error Missing: minimist@1.2.8 from lock file
+npm error Missing: strip-json-comments@2.0.1 from lock file
+npm error Missing: ansi-styles@6.2.3 from lock file
+npm error Missing: emoji-regex@8.0.0 from lock file
+npm error Missing: is-fullwidth-code-point@3.0.0 from lock file
+npm error Missing: strip-ansi@6.0.1 from lock file
+npm error Missing: ansi-regex@5.0.1 from lock file
+npm error Missing: ms@2.0.0 from lock file
+npm error Missing: mime-db@1.33.0 from lock file
+npm error Missing: fast-uri@3.1.0 from lock file
+npm error Missing: json-schema-traverse@1.0.0 from lock file
+npm error Missing: require-from-string@2.0.2 from lock file
+npm error
+npm error Clean install a project
+npm error
+npm error Usage:
+npm error npm ci
+npm error
+npm error Options:
+npm error [--install-strategy <hoisted|nested|shallow|linked>] [--legacy-bundling]
+npm error [--global-style] [--omit <dev|optional|peer> [--omit <dev|optional|peer> ...]]
+npm error [--include <prod|dev|optional|peer> [--include <prod|dev|optional|peer> ...]]
+npm error [--strict-peer-deps] [--foreground-scripts] [--ignore-scripts] [--no-audit]
+npm error [--no-bin-links] [--no-fund] [--dry-run]
+npm error [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]
+npm error [-ws|--workspaces] [--include-workspace-root] [--install-links]
+npm error
+npm error aliases: clean-install, ic, install-clean, isntall-clean
+npm error
+npm error Run "npm help ci" for more info
+
+2026-04-11T19:29:38.044211216Z [inf]  npm error A complete log of this run can be found in: /root/.npm/_logs/2026-04-11T19_29_36_613Z-debug-0.log
+
+2026-04-11T19:29:38.075442443Z [err]  npm ci
+2026-04-11T19:29:38.090849342Z [err]  ERROR: failed to build: failed to solve: process "npm ci" did not complete successfully: exit code: 1
