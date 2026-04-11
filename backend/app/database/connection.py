@@ -4,10 +4,8 @@ from typing import Generator
 
 from app.core.settings import settings
 
-# Build engine connect_args conditionally (check_same_thread is SQLite-only)
+# Build engine connect_args
 connect_args = {}
-if "sqlite" in settings.DATABASE_URL:
-    connect_args["check_same_thread"] = False
 
 engine = create_engine(
     settings.DATABASE_URL,

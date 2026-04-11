@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     DEBUG: bool = False
 
     # Database
-    DATABASE_URL: str = "sqlite:///./portfolio.db"
+    DATABASE_URL: str = "postgresql://postgres:postgres@localhost:5432/portfolio"
 
     # Security
     SECRET_KEY: str = "super-secret-key-change-in-production"
