@@ -12,8 +12,11 @@ function Skills() {
   const fetchData = async () => {
     try {
       const data = await getTechnologies();
-      setSkills(data);
-    } catch (err) { console.error(err); }
+      setSkills(Array.isArray(data) ? data : []);
+    } catch (err) { 
+      console.error('Erro ao pesquisar habilidades:', err);
+      setSkills([]);
+    }
     finally { setLoading(false); }
   };
 

@@ -23,9 +23,13 @@ function MeusProjetos() {
   const fetchData = async () => {
     try {
       const [p, t] = await Promise.all([getProjects(), getTechnologies()]);
-      setProjects(p);
-      setAvailableTechs(t);
-    } catch (err) { console.error(err); }
+      setProjects(Array.isArray(p) ? p : []);
+      setAvailableTechs(Array.isArray(t) ? t : []);
+    } catch (err) { 
+      console.error('Erro ao carregar projetos/tecnologias:', err);
+      setProjects([]);
+      setAvailableTechs([]);
+    }
     finally { setLoading(false); }
   };
 

@@ -10,11 +10,12 @@ function Mensagens() {
   useEffect(() => {
     getContactMessages()
       .then(res => {
-        setMessages(res);
+        setMessages(Array.isArray(res) ? res : []);
         setLoading(false);
       })
       .catch(err => {
-        console.error(err);
+        console.error('Erro ao carregar mensagens:', err);
+        setMessages([]);
         setLoading(false);
       });
   }, []);

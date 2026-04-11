@@ -19,15 +19,24 @@ function AdminDashboard() {
           getTechnologies(),
           getContactMessages()
         ]);
+        
+        // Garante que p, s e m sejam arrays antes de usar .length ou .slice
+        const projects = Array.isArray(p) ? p : [];
+        const skills = Array.isArray(s) ? s : [];
+        const messages = Array.isArray(m) ? m : [];
+
         setStats({
-          projects: p.length,
-          skills: s.length,
-          messages: m.length
+          projects: projects.length,
+          skills: skills.length,
+          messages: messages.length
         });
-        setRecentProjects(p.slice(0, 5));
-        setRecentMessages(m.slice(0, 3));
+        setRecentProjects(projects.slice(0, 5));
+        setRecentMessages(messages.slice(0, 3));
       } catch (err) {
-        console.error(err);
+        console.error('Erro ao carregar dados do dashboard:', err);
+        setStats({ projects: 0, skills: 0, messages: 0 });
+        setRecentProjects([]);
+        setRecentMessages([]);
       } finally {
         setLoading(false);
       }
