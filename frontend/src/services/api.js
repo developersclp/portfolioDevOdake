@@ -1,0 +1,101 @@
+import axios from 'axios';
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
+
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  timeout: 10000,
+});
+
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('adminToken');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+// Projects
+export const getProjects = async (featured = null) => {
+  const params = featured !== null ? { featured } : {};
+  const response = await api.get('/projects', { params });
+  return response.data;
+};
+
+export const getProjectById = async (id) => {
+  const response = await api.get(`/projects/${id}`);
+  return response.data;
+};
+
+// Technologies
+export const getTechnologies = async (category = null) => {
+  const params = category ? { category } : {};
+  const response = await api.get('/technologies', { params });
+  return response.data;
+};
+
+// Contact
+export const sendContactMessage = async (data) => {
+  const response = await api.post('/contact', data);
+  return response.data;
+};
+
+// Admin Auth
+export const adminLogin = async (username, password) => {
+  const response = await api.post('/auth/login', { username, password });
+  return response.data;
+};
+
+// Admin CRUD
+export const createProject = async (data) => {
+  const response = await api.post('/projects/', data);
+  return response.data;
+};
+export const deleteProject = async (id) => {
+  const response = await api.delete(`/projects/${id}`);
+  return response.data;
+};
+
+export const updateProject = async (id, data) => {
+  const response = await api.put(`/projects/${id}`, data);
+  return response.data;
+};
+
+export const uploadProjectImage = async (projectId, file, isMain = false) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('is_main', isMain);
+
+  const response = await api.post(`/projects/${projectId}/images`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return response.data;
+};
+
+export const deleteProjectImage = async (imageId) => {
+  const response = await api.delete(`/projects/images/${imageId}`);
+  return response.data;
+};
+
+export const createTechnology = async (data) => {
+  const response = await api.post('/technologies/', data, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+  return response.data;
+};
+export const deleteTechnology = async (id) => {
+  const response = await api.delete(`/technologies/${id}`);
+  return response.data;
+};
+
+export const getContactMessages = async () => {
+  const response = await api.get('/contact/');
+  return response.data;
+};
+
+export default api;
