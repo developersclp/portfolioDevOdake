@@ -34,19 +34,19 @@ api.interceptors.response.use(
 // Projects
 export const getProjects = async (featured = null) => {
   const params = featured !== null ? { featured } : {};
-  const response = await api.get('/projects', { params });
+  const response = await api.get('/projects/', { params });
   return response.data;
 };
 
 export const getProjectById = async (id) => {
-  const response = await api.get(`/projects/${id}`);
+  const response = await api.get(`/projects/${id}/`);
   return response.data;
 };
 
 // Technologies
 export const getTechnologies = async (category = null) => {
   const params = category ? { category } : {};
-  const response = await api.get('/technologies', { params });
+  const response = await api.get('/technologies/', { params });
   return response.data;
 };
 
