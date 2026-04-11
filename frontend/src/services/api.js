@@ -82,11 +82,8 @@ export const uploadProjectImage = async (projectId, file, isMain = false) => {
   formData.append('file', file);
   formData.append('is_main', isMain);
 
-  const response = await api.post(`/projects/${projectId}/images`, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
+  // Remove explicit headers so Axios can automatically generate the correct boundary
+  const response = await api.post(`/projects/${projectId}/images`, formData);
   return response.data;
 };
 
@@ -96,9 +93,8 @@ export const deleteProjectImage = async (imageId) => {
 };
 
 export const createTechnology = async (data) => {
-  const response = await api.post('/technologies/', data, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  });
+  // Remove explicit headers so Axios can automatically generate the correct boundary
+  const response = await api.post('/technologies/', data);
   return response.data;
 };
 export const deleteTechnology = async (id) => {
