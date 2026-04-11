@@ -1,13 +1,8 @@
-import { FaRegBell } from 'react-icons/fa';
-import { useEffect, useState } from 'react';
-import api from '../../services/api';
+import { FaRegBell, FaUser } from 'react-icons/fa';
+import { useProfile } from '../../context/ProfileContext';
 
 function AdminHeader() {
-  const [profile, setProfile] = useState(null);
-
-  useEffect(() => {
-    api.get('/users/me').then(res => setProfile(res.data)).catch(console.error);
-  }, []);
+  const { profile, loading } = useProfile();
 
   return (
     <header className="h-16 border-b border-white/10 px-8 flex items-center justify-between bg-primary-200/50 backdrop-blur-md sticky top-0 z-40">
@@ -21,11 +16,15 @@ function AdminHeader() {
 
         <div className="flex items-center gap-3 pl-6 border-l border-white/10">
           <div className="text-right hidden sm:block">
-            <p className="text-sm font-medium text-white">{profile?.username || 'admin'}</p>
-            <p className="text-xs text-text-muted underline decoration-accent/30">{profile?.email || 'email@exemplo.com'}</p>
+            <p className="text-sm font-medium text-white">
+              {loading ? 'Carregando...' : (profile?.full_name || profile?.username || 'Usuário')}
+            </p>
+            <p className="text-xs text-text-muted underline decoration-accent/30 lowercase">
+              {profile?.email || 'configurando perfil...'}
+            </p>
           </div>
-          <div className="w-9 h-9 rounded-full bg-accent flex items-center justify-center text-white font-bold border border-white/20">
-            {profile?.username?.substring(0, 1).toUpperCase() || 'A'}
+          <div className="w-9 h-9 rounded-full bg-accent flex items-center justify-center text-white font-bold border border-white/20 overflow-hidden">
+            {profile?.username ? profile.username.substring(0, 1).toUpperCase() : <FaUser className="w-4 h-4" />}
           </div>
         </div>
       </div>

@@ -18,6 +18,19 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+// Interceptor para lidar com erros de autenticação (401)
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      // Se o token for inválido/expirado, remove e força login
+      localStorage.removeItem('adminToken');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
+
 // Projects
 export const getProjects = async (featured = null) => {
   const params = featured !== null ? { featured } : {};
