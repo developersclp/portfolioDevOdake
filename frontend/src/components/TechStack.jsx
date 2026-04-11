@@ -31,10 +31,10 @@ function TechStack() {
     const fetchTech = async () => {
       try {
         const data = await getTechnologies();
-        setTechnologies(data);
+        // Garante que technologies seja sempre um array
+        setTechnologies(Array.isArray(data) ? data : []);
       } catch (err) {
         console.error('Error fetching technologies:', err);
-        // Fallback static data
         setTechnologies([]);
       }
     };
@@ -42,9 +42,11 @@ function TechStack() {
   }, []);
 
   const categories = ['all', ...Object.keys(categoryLabels)];
-  const filtered = activeCategory === 'all'
-    ? technologies
-    : technologies.filter((t) => t.category === activeCategory);
+  const filtered = Array.isArray(technologies) 
+    ? (activeCategory === 'all'
+        ? technologies
+        : technologies.filter((t) => t.category === activeCategory))
+    : [];
 
   return (
     <section id="tech" className="relative">
