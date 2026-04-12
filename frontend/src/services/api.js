@@ -4,9 +4,8 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/
 
 const api = axios.create({
   baseURL: API_BASE_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  // Não definimos Content-Type globalmente para permitir que o Axios
+  // defina automaticamente 'multipart/form-data' (com boundary) para FormData
   timeout: 10000,
 });
 
@@ -15,6 +14,16 @@ api.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+
+  // Se o body for FormData, garante que o Content-Type NÃO seja forçado
+  // para que o Axios defina automaticamente 'multipart/form-data' com o boundary correto
+  if (config.data instanceof FormData) {
+    delete config.headers['Content-Type'];
+  } else {
+    // JSON requests precisam do Content-Type explícito
+    config.headers['Content-Type'] = 'application/json';
+  }
+
   return config;
 });
 
