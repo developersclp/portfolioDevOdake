@@ -54,11 +54,20 @@ function Footer() {
           <div>
             <h3 className="text-text-primary font-semibold mb-6 uppercase tracking-wider text-sm">Navegação Rápida</h3>
             <ul className="space-y-3">
-              {['Home', 'Sobre', 'Tecnologias', 'Projetos', 'Contato'].map((item) => (
-                <li key={item}>
-                  <a href={`/#${item.toLowerCase()}`} className="text-text-muted hover:text-accent text-sm transition-colors flex items-center gap-2 group">
+              {[
+                { label: 'Home', href: '/#home' },
+                { label: 'Sobre', href: '/#about' },
+                { label: 'Skills', href: '/#tech' },
+                { label: 'Formação', href: '/#education' },
+                { label: 'Certificados', href: '/#certificates' },
+                { label: 'Projetos', href: '/#projects' },
+                { label: 'Currículo', href: '/#curriculo' },
+                { label: 'Contato', href: '/#contact' }
+              ].map((item) => (
+                <li key={item.label}>
+                  <a href={item.href} className="text-text-muted hover:text-accent text-sm transition-colors flex items-center gap-2 group">
                     <span className="w-1 h-1 rounded-full bg-accent/30 group-hover:bg-accent transition-colors" />
-                    {item}
+                    {item.label}
                   </a>
                 </li>
               ))}

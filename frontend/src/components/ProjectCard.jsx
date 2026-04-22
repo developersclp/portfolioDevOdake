@@ -11,7 +11,8 @@ function ProjectCard({ project, index = 0, isVisible = true }) {
     <>
     <motion.article
       initial={{ opacity: 0, y: 30 }}
-      animate={isVisible ? { opacity: 1, y: 0 } : {}}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.6, delay: index * 0.15 }}
       onClick={() => setIsModalOpen(true)}
       className="glass-card overflow-hidden group hover:border-accent/20 cursor-pointer

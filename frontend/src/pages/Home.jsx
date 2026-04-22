@@ -1,32 +1,29 @@
 import Hero from '../components/Hero';
 import About from '../components/About';
 import TechStack from '../components/TechStack';
+import Education from '../components/Education';
+import Certificates from '../components/Certificates';
 import ProjectCard from '../components/ProjectCard';
+import Resume from '../components/Resume';
 import ContactForm from '../components/ContactForm';
 import SectionTitle from '../components/SectionTitle';
 import { useProjects } from '../hooks/useProjects';
-import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { HiArrowRight } from 'react-icons/hi';
 
 function Home() {
   const { projects, loading, error } = useProjects(true); // Featured only
-  const { ref: projectsRef, isVisible: projectsVisible } = useScrollAnimation();
 
   return (
     <>
-      {/* Hero Section */}
       <Hero />
-
-      {/* About Section */}
       <About />
-
-      {/* Tech Stack Section */}
       <TechStack />
+      <Education />
+      <Certificates />
 
-      {/* Featured Projects Section */}
-      <section id="projects" className="relative" ref={projectsRef}>
+      <section id="projects" className="relative py-20 bg-primary/30">
         <div className="section-container">
           <SectionTitle
             title="Projetos Destacados"
@@ -54,24 +51,24 @@ function Home() {
                     key={project.id}
                     project={project}
                     index={index}
-                    isVisible={projectsVisible}
                   />
                 ))}
               </div>
 
-              {/* View All Projects Button */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
-                animate={projectsVisible ? { opacity: 1, y: 0 } : {}}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.1 }}
                 transition={{ duration: 0.5, delay: 0.6 }}
                 className="text-center mt-12"
               >
                 <Link
                   to="/projects"
-                  className="btn-outline inline-flex items-center gap-2 group"
+                  className="btn-outline inline-flex items-center gap-2 group shimmer-btn relative overflow-hidden"
                 >
-                  Ver Todos os Projetos
-                  <HiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <span className="relative z-10">Ver Todos os Projetos</span>
+                  <HiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform relative z-10" />
+                  <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
                 </Link>
               </motion.div>
             </>
@@ -79,7 +76,7 @@ function Home() {
         </div>
       </section>
 
-      {/* Contact Section */}
+      <Resume />
       <ContactForm />
     </>
   );

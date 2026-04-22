@@ -13,8 +13,11 @@ function Navbar() {
   const navLinks = [
     { name: 'Home', href: '/#home' },
     { name: 'Sobre', href: '/#about' },
-    { name: 'Tecnologias', href: '/#tech' },
+    { name: 'Skills', href: '/#tech' },
+    { name: 'Formação', href: '/#education' },
+    { name: 'Certificados', href: '/#certificates' },
     { name: 'Projetos', href: '/#projects' },
+    { name: 'Currículo', href: '/#curriculo' },
     { name: 'Contato', href: '/#contact' },
   ];
 

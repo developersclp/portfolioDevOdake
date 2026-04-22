@@ -9,6 +9,8 @@ import AdminLayout from './layouts/AdminLayout';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import MeusProjetos from './pages/admin/MeusProjetos';
 import Skills from './pages/admin/Skills';
+import Formacao from './pages/admin/Formacao';
+import Certificados from './pages/admin/Certificados';
 import ProfileSettings from './pages/admin/ProfileSettings';
 import Mensagens from './pages/admin/Mensagens';
 
@@ -32,6 +34,8 @@ function App() {
                <Route index element={<AdminDashboard />} />
                <Route path="projects" element={<MeusProjetos />} />
                <Route path="skills" element={<Skills />} />
+               <Route path="education" element={<Formacao />} />
+               <Route path="certificates" element={<Certificados />} />
                <Route path="profile" element={<ProfileSettings />} />
                <Route path="messages" element={<Mensagens />} />
             </Route>

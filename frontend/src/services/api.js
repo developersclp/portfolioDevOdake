@@ -116,4 +116,41 @@ export const getContactMessages = async () => {
   return response.data;
 };
 
+export const markMessageAsRead = async (id) => {
+  const response = await api.patch(`/contact/${id}/read`);
+  return response.data;
+};
+
+// Education
+export const getEducation = async () => {
+  const response = await api.get('/education/');
+  return response.data;
+};
+
+export const createEducation = async (data) => {
+  const response = await api.post('/education/', data);
+  return response.data;
+};
+
+export const deleteEducation = async (id) => {
+  const response = await api.delete(`/education/${id}`);
+  return response.data;
+};
+
+// Certificates
+export const getCertificates = async () => {
+  const response = await api.get('/certificates/');
+  return response.data;
+};
+
+export const createCertificate = async (data) => {
+  const response = await api.post('/certificates/', data);
+  return response.data;
+};
+
+export const deleteCertificate = async (id) => {
+  const response = await api.delete(`/certificates/${id}`);
+  return response.data;
+};
+
 export default api;

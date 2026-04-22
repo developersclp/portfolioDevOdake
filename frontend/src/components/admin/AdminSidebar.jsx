@@ -1,11 +1,13 @@
 import { Link, useLocation } from 'react-router-dom';
-import { FaChartPie, FaFolderOpen, FaTools, FaUserCircle, FaEnvelope, FaExternalLinkAlt, FaSignOutAlt } from 'react-icons/fa';
+import { FaChartPie, FaFolderOpen, FaTools, FaUserCircle, FaEnvelope, FaExternalLinkAlt, FaSignOutAlt, FaGraduationCap, FaCertificate } from 'react-icons/fa';
 import { useAuth } from '../../context/AuthContext';
 
 const menuItems = [
   { name: 'Dashboard', icon: FaChartPie, path: '/admin' },
   { name: 'Meus Projetos', icon: FaFolderOpen, path: '/admin/projects' },
   { name: 'Skills', icon: FaTools, path: '/admin/skills' },
+  { name: 'Formação', icon: FaGraduationCap, path: '/admin/education' },
+  { name: 'Certificados', icon: FaCertificate, path: '/admin/certificates' },
   { name: 'Sobre Mim', icon: FaUserCircle, path: '/admin/profile' },
   { name: 'Mensagens', icon: FaEnvelope, path: '/admin/messages' },
 ];

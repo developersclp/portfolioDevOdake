@@ -75,6 +75,42 @@
            hover:shadow-glow active:scale-95;
   }
 
+  /* Shimmer Button */
+  .shimmer-btn {
+    position: relative;
+    overflow: hidden;
+  }
+  .shimmer-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+    transform: skewX(-20deg);
+    transition: none;
+  }
+  .shimmer-btn:hover::before {
+    animation: shimmer 1.5s infinite;
+  }
+
+  /* Shimmer Text */
+  .shimmer-text {
+    background: linear-gradient(
+      90deg,
+      rgba(255,255,255,1) 0%,
+      rgba(255,255,255,0.7) 20%,
+      rgba(255,255,255,1) 40%,
+      rgba(255,255,255,1) 100%
+    );
+    background-size: 200% auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: shimmerText 3s linear infinite;
+  }
+
   /* Section Container */
   .section-container {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28;
@@ -107,6 +143,21 @@
 
   .nav-link:hover::after {
     @apply w-full;
+  }
+
+  @keyframes shimmer {
+    100% {
+      left: 100%;
+    }
+  }
+
+  @keyframes shimmerText {
+    0% {
+      background-position: -200% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
   }
 }
 

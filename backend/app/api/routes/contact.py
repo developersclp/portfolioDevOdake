@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 
@@ -19,6 +19,14 @@ def send_message(contact_data: ContactCreate, db: Session = Depends(get_db)):
 
 @router.get("/", response_model=List[ContactResponse], dependencies=[Depends(get_current_admin)])
 def list_messages(db: Session = Depends(get_db)):
-    """List all contact messages. (Prepared for future authentication)"""
-    # TODO: Add authentication middleware before production
+    """List all contact messages."""
     return ContactService.get_all_messages(db)
+
+
+@router.patch("/{message_id}/read", response_model=ContactResponse, dependencies=[Depends(get_current_admin)])
+def mark_message_as_read(message_id: int, db: Session = Depends(get_db)):
+    """Mark a contact message as read."""
+    message = ContactService.mark_as_read(db, message_id)
+    if not message:
+        raise HTTPException(status_code=404, detail="Mensagem não encontrada")
+    return message

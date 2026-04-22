@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
-import { getProjects, getTechnologies, getContactMessages } from '../../services/api';
-import { FaFolderOpen, FaTools, FaEnvelope, FaPlus, FaUserEdit, FaExternalLinkAlt } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import { getProjects, getTechnologies, getContactMessages, getEducation, getCertificates } from '../../services/api';
+import { FaFolderOpen, FaTools, FaEnvelope, FaPlus, FaUserEdit, FaExternalLinkAlt, FaGraduationCap, FaCertificate } from 'react-icons/fa';
 import StatCard from '../../components/admin/StatCard';
 import QuickAction from '../../components/admin/QuickAction';
 import { motion } from 'framer-motion';
 
 function AdminDashboard() {
-  const [stats, setStats] = useState({ projects: 0, skills: 0, messages: 0 });
+  const [stats, setStats] = useState({ projects: 0, skills: 0, messages: 0, education: 0, certificates: 0 });
   const [recentProjects, setRecentProjects] = useState([]);
   const [recentMessages, setRecentMessages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,27 +15,33 @@ function AdminDashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [p, s, m] = await Promise.all([
+        const [p, s, m, e, c] = await Promise.all([
           getProjects(),
           getTechnologies(),
-          getContactMessages()
+          getContactMessages(),
+          getEducation(),
+          getCertificates()
         ]);
         
         // Garante que p, s e m sejam arrays antes de usar .length ou .slice
         const projects = Array.isArray(p) ? p : [];
         const skills = Array.isArray(s) ? s : [];
         const messages = Array.isArray(m) ? m : [];
+        const education = Array.isArray(e) ? e : [];
+        const certificates = Array.isArray(c) ? c : [];
 
         setStats({
           projects: projects.length,
           skills: skills.length,
-          messages: messages.length
+          messages: messages.length,
+          education: education.length,
+          certificates: certificates.length
         });
         setRecentProjects(projects.slice(0, 5));
         setRecentMessages(messages.slice(0, 3));
       } catch (err) {
         console.error('Erro ao carregar dados do dashboard:', err);
-        setStats({ projects: 0, skills: 0, messages: 0 });
+        setStats({ projects: 0, skills: 0, messages: 0, education: 0, certificates: 0 });
         setRecentProjects([]);
         setRecentMessages([]);
       } finally {
@@ -67,10 +74,12 @@ function AdminDashboard() {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         <StatCard title="Projetos" count={stats.projects} icon={FaFolderOpen} colorClass="bg-blue-500" />
         <StatCard title="Habilidades" count={stats.skills} icon={FaTools} colorClass="bg-green-500" />
-        <StatCard title="Novas Mensagens" count={stats.messages} icon={FaEnvelope} colorClass="bg-accent" />
+        <StatCard title="Formações" count={stats.education} icon={FaGraduationCap} colorClass="bg-purple-500" />
+        <StatCard title="Certificados" count={stats.certificates} icon={FaCertificate} colorClass="bg-yellow-500" />
+        <StatCard title="Mensagens" count={stats.messages} icon={FaEnvelope} colorClass="bg-accent" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -106,7 +115,7 @@ function AdminDashboard() {
             <h2 className="text-xl font-bold text-white flex items-center gap-2">
               <FaEnvelope className="text-accent" /> Mensagens Recentes
             </h2>
-            <button className="text-accent hover:underline text-sm font-medium">Ver todas</button>
+            <Link to="/admin/messages" className="text-accent hover:underline text-sm font-medium">Ver todas</Link>
           </div>
           <div className="space-y-4">
             {recentMessages.length === 0 ? (
