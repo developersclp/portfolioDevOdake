@@ -12,7 +12,17 @@ function Certificates() {
     const fetchCertificates = async () => {
       try {
         const data = await getCertificates();
-        setCertificates(Array.isArray(data) ? data : []);
+        if (Array.isArray(data)) {
+          const sorted = [...data].sort((a, b) => {
+            const yearA = parseInt(String(a.date || '').match(/\d{4}/)?.[0] || '0');
+            const yearB = parseInt(String(b.date || '').match(/\d{4}/)?.[0] || '0');
+            if (yearA !== yearB) return yearB - yearA;
+            return String(b.date || '').localeCompare(String(a.date || ''));
+          });
+          setCertificates(sorted);
+        } else {
+          setCertificates([]);
+        }
       } catch (err) {
         console.error('Erro ao carregar certificados:', err);
       } finally {

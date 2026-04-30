@@ -20,11 +20,10 @@ function ContactForm() {
     { icon: FaLinkedin, href: profile.linkedin_url, label: 'LinkedIn' },
   ].filter(link => link.href) : [];
 
-  // Safely define contact info if profile exists
   const contactInfo = profile ? [
     { icon: HiMail, text: profile.email, label: 'Email' },
     { icon: HiLocationMarker, text: 'Brasil', label: 'Local' },
-    { icon: HiPhone, text: 'Disponível para propostas', label: 'Status' },
+    { icon: HiPhone, text: '(11) 94969-4654', label: 'Telefone' },
   ] : [];
 
   const handleChange = (e) => {

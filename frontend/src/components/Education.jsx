@@ -12,7 +12,17 @@ function Education() {
     const fetchEducation = async () => {
       try {
         const data = await getEducation();
-        setEducation(Array.isArray(data) ? data : []);
+        if (Array.isArray(data)) {
+          const sorted = [...data].sort((a, b) => {
+            const yearA = parseInt(String(a.start_date || '').match(/\d{4}/)?.[0] || '0');
+            const yearB = parseInt(String(b.start_date || '').match(/\d{4}/)?.[0] || '0');
+            if (yearA !== yearB) return yearA - yearB;
+            return String(a.start_date || '').localeCompare(String(b.start_date || ''));
+          });
+          setEducation(sorted);
+        } else {
+          setEducation([]);
+        }
       } catch (err) {
         console.error('Erro ao carregar formação:', err);
       } finally {
