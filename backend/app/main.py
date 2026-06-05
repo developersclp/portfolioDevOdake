@@ -12,11 +12,12 @@ from app.api.api_router import api_router
 import os
 from fastapi.staticfiles import StaticFiles
 
+# Garante que a pasta uploads existe antes de montar a rota de arquivos estáticos
+os.makedirs("uploads", exist_ok=True)
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Application lifespan: startup and shutdown events."""
-    # Ensure uploads directory exists
-    os.makedirs("uploads", exist_ok=True)
     # Startup: create tables and seed data
     Base.metadata.create_all(bind=engine)
     db = SessionLocal()
