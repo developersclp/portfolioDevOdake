@@ -51,8 +51,14 @@ def create_certificate(
     )
     return CertificateService.create(db, cert_data)
 
+@router.put("/reorder", dependencies=[Depends(get_current_admin)])
+def reorder_certificates(ids: List[int], db: Session = Depends(get_db)):
+    """Reorder certificates based on a list of IDs."""
+    CertificateService.reorder(db, ids)
+    return {"message": "Certificados ordenados com sucesso"}
 
 @router.put("/{cert_id}", response_model=CertificateResponse, dependencies=[Depends(get_current_admin)])
+
 def update_certificate(cert_id: int, cert_data: CertificateUpdate, db: Session = Depends(get_db)):
     """Update an existing certificate."""
     certificate = CertificateService.update(db, cert_id, cert_data)

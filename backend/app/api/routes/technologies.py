@@ -48,7 +48,14 @@ def create_technology(
     )
     return TechnologyService.create(db, tech_data)
 
+@router.put("/reorder", dependencies=[Depends(get_current_admin)])
+def reorder_technologies(ids: List[int], db: Session = Depends(get_db)):
+    """Reorder technologies based on a list of IDs."""
+    TechnologyService.reorder(db, ids)
+    return {"message": "Habilidades ordenadas com sucesso"}
+
 @router.put("/{tech_id}", response_model=TechnologyResponse, dependencies=[Depends(get_current_admin)])
+
 def update_technology(
     tech_id: int,
     tech_data: TechnologyUpdate,

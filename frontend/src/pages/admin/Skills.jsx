@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { getTechnologies, createTechnology, deleteTechnology } from '../../services/api';
+import { getTechnologies, createTechnology, deleteTechnology, reorderTechnologies } from '../../services/api';
 import { FaTrash, FaPlus, FaTools } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 
 function Skills() {
   const [skills, setSkills] = useState([]);
@@ -21,6 +22,28 @@ function Skills() {
   };
 
   useEffect(() => { fetchData(); }, []);
+
+  const handleDragEnd = async (result) => {
+    const { source, destination } = result;
+    if (!destination) return;
+    if (source.index === destination.index) return;
+
+    const reorderedSkills = Array.from(skills);
+    const [movedSkill] = reorderedSkills.splice(source.index, 1);
+    reorderedSkills.splice(destination.index, 0, movedSkill);
+
+    // Atualiza localmente
+    const withNewOrders = reorderedSkills.map((s, idx) => ({ ...s, order: idx }));
+    setSkills(withNewOrders);
+
+    try {
+      await reorderTechnologies(withNewOrders.map(s => s.id));
+    } catch (err) {
+      console.error('Erro ao reordenar habilidades:', err);
+      alert('Erro ao salvar nova ordenação no servidor');
+      fetchData();
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -95,36 +118,64 @@ function Skills() {
         </div>
 
         <div className="md:col-span-2">
-          <div className="space-y-2">
-            {['frontend', 'backend', 'database', 'devops'].map(category => (
-                <div key={category} className="space-y-2 mb-6">
-                    <h3 className="text-xs font-bold text-text-muted uppercase tracking-widest pl-2 mb-3">{category}</h3>
-                    <div className="grid grid-cols-1 gap-2">
-                        {skills.filter(s => s.category === category).map(skill => (
-                            <div key={skill.id} className="flex items-center justify-between p-3 bg-white/5 border border-white/5 rounded-lg hover:border-white/10 transition-all">
-                                <span className="text-sm text-text-secondary font-medium">{skill.name}</span>
-                                <div className="flex items-center gap-4">
-                                    <div className="w-10 h-10 rounded overflow-hidden bg-black/20 flex items-center justify-center p-1">
-                                        {skill.image_url ? (
-                                            <img src={`${(import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1').replace('/api/v1', '')}${skill.image_url}`} alt={skill.name} className="w-full h-full object-contain" />
-                                        ) : (
-                                            <span className="text-xs text-center text-text-muted">Sem Imagem</span>
-                                        )}
-                                    </div>
-                                    <button onClick={() => handleDelete(skill.id)} className="text-red-400/50 hover:text-red-400 transition-colors">
-                                        <FaTrash className="w-3.5 h-3.5" />
-                                    </button>
-                                </div>
+          <DragDropContext onDragEnd={handleDragEnd}>
+            <Droppable droppableId="skills">
+              {(provided) => (
+                <div
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                  className="space-y-2 min-h-[200px] bg-white/[0.02] p-3 rounded-lg border border-dashed border-white/5"
+                >
+                  {skills.length === 0 ? (
+                    <p className="text-text-muted italic text-center py-8">Nenhuma habilidade cadastrada.</p>
+                  ) : (
+                    skills.map((skill, index) => (
+                      <Draggable key={skill.id} draggableId={String(skill.id)} index={index}>
+                        {(provided, snapshot) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            className={`flex items-center justify-between p-3 rounded-lg hover:border-white/10 transition-all select-none ${
+                              snapshot.isDragging 
+                              ? 'bg-accent/20 border border-accent shadow-lg shadow-accent/10' 
+                              : 'bg-white/5 border border-white/5'
+                            }`}
+                          >
+                            <div className="flex items-center gap-3">
+                              <span className="text-sm text-text-secondary font-medium">{skill.name}</span>
+                              <span className="text-[10px] bg-white/5 text-text-muted px-2 py-0.5 rounded uppercase font-bold tracking-tight">
+                                {skill.category}
+                              </span>
                             </div>
-                        ))}
-                    </div>
+                            <div className="flex items-center gap-4">
+                              <div className="w-10 h-10 rounded overflow-hidden bg-black/20 flex items-center justify-center p-1">
+                                {skill.image_url ? (
+                                  <img src={`${(import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1').replace('/api/v1', '')}${skill.image_url}`} alt={skill.name} className="w-full h-full object-contain" />
+                                ) : (
+                                  <span className="text-xs text-center text-text-muted">Sem Imagem</span>
+                                )}
+                              </div>
+                              <button onClick={() => handleDelete(skill.id)} className="text-red-400/50 hover:text-red-400 transition-colors">
+                                <FaTrash className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </Draggable>
+                    ))
+                  )}
+                  {provided.placeholder}
                 </div>
-            ))}
-          </div>
+              )}
+            </Droppable>
+          </DragDropContext>
         </div>
       </div>
     </div>
+
   );
 }
+
 
 export default Skills;

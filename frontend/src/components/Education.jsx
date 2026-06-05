@@ -86,7 +86,7 @@ function Education() {
                       <div className="absolute -inset-2 bg-gradient-to-r from-accent/0 via-accent/10 to-accent/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
 
                       <div className="flex items-center gap-3 mb-2">
-                        <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center text-accent">
+                        <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center text-accent shrink-0">
                           <FaGraduationCap className="w-5 h-5" />
                         </div>
                         <div>

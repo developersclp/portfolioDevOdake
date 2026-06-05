@@ -13,13 +13,7 @@ function Certificates() {
       try {
         const data = await getCertificates();
         if (Array.isArray(data)) {
-          const sorted = [...data].sort((a, b) => {
-            const yearA = parseInt(String(a.date || '').match(/\d{4}/)?.[0] || '0');
-            const yearB = parseInt(String(b.date || '').match(/\d{4}/)?.[0] || '0');
-            if (yearA !== yearB) return yearB - yearA;
-            return String(b.date || '').localeCompare(String(a.date || ''));
-          });
-          setCertificates(sorted);
+          setCertificates(data);
         } else {
           setCertificates([]);
         }

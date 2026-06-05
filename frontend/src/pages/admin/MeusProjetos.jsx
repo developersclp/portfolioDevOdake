@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { getProjects, createProject, updateProject, deleteProject, getTechnologies, uploadProjectImage, deleteProjectImage } from '../../services/api';
+import { getProjects, createProject, updateProject, deleteProject, getTechnologies, uploadProjectImage, deleteProjectImage, reorderProjects } from '../../services/api';
 import { FaTrash, FaEdit, FaPlus, FaRocket, FaImage, FaImages, FaTimes } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 
 function MeusProjetos() {
   const [projects, setProjects] = useState([]);
@@ -34,6 +35,45 @@ function MeusProjetos() {
   };
 
   useEffect(() => { fetchData(); }, []);
+
+  const handleDragEnd = async (result) => {
+    const { source, destination } = result;
+    if (!destination) return;
+    if (source.index === destination.index) return;
+
+    const reorderedProjects = Array.from(projects);
+    const [movedProject] = reorderedProjects.splice(source.index, 1);
+    reorderedProjects.splice(destination.index, 0, movedProject);
+
+    // Atualiza localmente
+    const withNewOrders = reorderedProjects.map((p, idx) => ({ ...p, order: idx }));
+    setProjects(withNewOrders);
+
+    try {
+      await reorderProjects(withNewOrders.map(p => p.id));
+    } catch (err) {
+      console.error('Erro ao reordenar projetos:', err);
+      alert('Erro ao salvar nova ordenação no servidor');
+      fetchData();
+    }
+  };
+
+  const handleRemoveImage = async (imageId) => {
+    if (!window.confirm('Excluir esta imagem permanentemente?')) return;
+    try {
+      await deleteProjectImage(imageId);
+      
+      // Atualiza o estado do projeto que está sendo editado
+      setEditingProject(prev => {
+        const updatedImages = prev.images.filter(img => img.id !== imageId);
+        setProjects(projects.map(p => p.id === prev.id ? { ...p, images: updatedImages } : p));
+        return { ...prev, images: updatedImages };
+      });
+    } catch (err) {
+      console.error('Erro ao excluir imagem:', err);
+      alert('Erro ao excluir imagem');
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -170,9 +210,40 @@ function MeusProjetos() {
               </div>
 
               <div className="space-y-4 pt-4 border-t border-glass-border">
+                {editingProject && editingProject.images && editingProject.images.length > 0 && (
+                  <div className="space-y-3 p-4 bg-white/5 rounded-lg border border-white/5">
+                    <h4 className="text-xs font-bold text-text-primary uppercase tracking-wider">Imagens Atuais</h4>
+                    <div className="grid grid-cols-3 gap-2">
+                      {editingProject.images.map(img => {
+                        const API_BASE = (import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1').replace('/api/v1', '');
+                        return (
+                          <div key={img.id} className="relative group/img aspect-video rounded overflow-hidden bg-black/40 border border-white/10 flex items-center justify-center">
+                            <img 
+                              src={`${API_BASE}${img.image_url}`} 
+                              alt="Project thumbnail" 
+                              className="w-full h-full object-cover"
+                            />
+                            {img.is_main && (
+                              <span className="absolute top-1 left-1 bg-accent text-white text-[8px] font-bold px-1 py-0.5 rounded uppercase">Capa</span>
+                            )}
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveImage(img.id)}
+                              className="absolute top-1 right-1 p-1 bg-red-600 hover:bg-red-700 text-white rounded transition-opacity opacity-0 group-hover/img:opacity-100"
+                              title="Excluir imagem"
+                            >
+                              <FaTrash className="w-2.5 h-2.5" />
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
                 <div>
                   <label className="text-xs font-bold text-text-muted uppercase tracking-wider flex items-center gap-2 mb-2">
-                    <FaImage className="text-accent" /> Imagem Principal (Capa)
+                    <FaImage className="text-accent" /> {editingProject ? 'Adicionar Nova Capa (Substitui a atual)' : 'Imagem Principal (Capa)'}
                   </label>
                   <input 
                     type="file" 
@@ -185,7 +256,7 @@ function MeusProjetos() {
 
                 <div>
                   <label className="text-xs font-bold text-text-muted uppercase tracking-wider flex items-center gap-2 mb-2">
-                    <FaImages className="text-accent" /> Outras Imagens (Galeria)
+                    <FaImages className="text-accent" /> {editingProject ? 'Adicionar Novas Imagens na Galeria' : 'Outras Imagens (Galeria)'}
                   </label>
                   <input 
                     type="file" 
@@ -228,45 +299,65 @@ function MeusProjetos() {
         </div>
 
         {/* List Column */}
-        <div className="lg:col-span-2 space-y-4">
-          {projects.map((proj, index) => (
-            <motion.div 
-              key={proj.id}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.05 }}
-              className="glass-card p-5 flex items-center justify-between group hover:border-white/20 transition-all"
-            >
-              <div className="flex-1 min-w-0 pr-4">
-                <div className="flex items-center gap-3 mb-1">
-                    <h3 className="font-bold text-white truncate">{proj.title}</h3>
-                    {proj.featured && <span className="text-[10px] bg-accent/20 text-accent px-2 py-0.5 rounded uppercase font-bold tracking-tighter">Destaque</span>}
-                </div>
-                <p className="text-sm text-text-muted truncate mb-2">{proj.short_description}</p>
-                <div className="flex flex-wrap gap-1">
-                    {proj.technologies?.map(t => (
-                        <span key={t.id} className="text-[9px] bg-white/5 text-text-muted px-1.5 py-0.5 rounded">{t.name}</span>
-                    ))}
-                </div>
-              </div>
-              <div className="flex items-center gap-2 flex-shrink-0">
-                <button 
-                  onClick={() => handleEdit(proj)}
-                  className="p-3 text-accent hover:bg-accent/10 rounded-full transition-all"
-                  title="Editar projeto"
+        <div className="lg:col-span-2">
+          <DragDropContext onDragEnd={handleDragEnd}>
+            <Droppable droppableId="projects">
+              {(provided) => (
+                <div
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                  className="space-y-4 min-h-[100px] bg-white/[0.02] p-3 rounded-lg border border-dashed border-white/5"
                 >
-                  <FaEdit className="w-4 h-4" />
-                </button>
-                <button 
-                  onClick={() => handleDelete(proj.id)}
-                  className="p-3 text-red-400 hover:bg-red-400/10 rounded-full transition-all"
-                  title="Excluir projeto"
-                >
-                  <FaTrash className="w-4 h-4" />
-                </button>
-              </div>
-            </motion.div>
-          ))}
+                  {projects.map((proj, index) => (
+                    <Draggable key={proj.id} draggableId={String(proj.id)} index={index}>
+                      {(provided, snapshot) => (
+                        <div 
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          className={`p-5 flex items-center justify-between rounded-lg hover:border-white/20 transition-all select-none ${
+                            snapshot.isDragging 
+                            ? 'bg-accent/20 border border-accent shadow-lg shadow-accent/10' 
+                            : 'bg-white/5 border border-white/5'
+                          }`}
+                        >
+                          <div className="flex-1 min-w-0 pr-4">
+                            <div className="flex items-center gap-3 mb-1">
+                                <h3 className="font-bold text-white truncate">{proj.title}</h3>
+                                {proj.featured && <span className="text-[10px] bg-accent/20 text-accent px-2 py-0.5 rounded uppercase font-bold tracking-tighter">Destaque</span>}
+                            </div>
+                            <p className="text-sm text-text-muted truncate mb-2">{proj.short_description}</p>
+                            <div className="flex flex-wrap gap-1">
+                                {proj.technologies?.map(t => (
+                                    <span key={t.id} className="text-[9px] bg-white/5 text-text-muted px-1.5 py-0.5 rounded">{t.name}</span>
+                                ))}
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2 flex-shrink-0">
+                            <button 
+                              onClick={() => handleEdit(proj)}
+                              className="p-3 text-accent hover:bg-accent/10 rounded-full transition-all"
+                              title="Editar projeto"
+                            >
+                              <FaEdit className="w-4 h-4" />
+                            </button>
+                            <button 
+                              onClick={() => handleDelete(proj.id)}
+                              className="p-3 text-red-400 hover:bg-red-400/10 rounded-full transition-all"
+                              title="Excluir projeto"
+                            >
+                              <FaTrash className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
         </div>
       </div>
     </div>
@@ -274,3 +365,4 @@ function MeusProjetos() {
 }
 
 export default MeusProjetos;
+

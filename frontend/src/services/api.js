@@ -86,6 +86,12 @@ export const updateProject = async (id, data) => {
   return response.data;
 };
 
+export const reorderProjects = async (ids) => {
+  const response = await api.put('/projects/reorder', ids);
+  return response.data;
+};
+
+
 export const uploadProjectImage = async (projectId, file, isMain = false) => {
   const formData = new FormData();
   formData.append('file', file);
@@ -110,6 +116,12 @@ export const deleteTechnology = async (id) => {
   const response = await api.delete(`/technologies/${id}`);
   return response.data;
 };
+
+export const reorderTechnologies = async (ids) => {
+  const response = await api.put('/technologies/reorder', ids);
+  return response.data;
+};
+
 
 export const getContactMessages = async () => {
   const response = await api.get('/contact/');
@@ -152,5 +164,11 @@ export const deleteCertificate = async (id) => {
   const response = await api.delete(`/certificates/${id}`);
   return response.data;
 };
+
+export const reorderCertificates = async (ids) => {
+  const response = await api.put('/certificates/reorder', ids);
+  return response.data;
+};
+
 
 export default api;

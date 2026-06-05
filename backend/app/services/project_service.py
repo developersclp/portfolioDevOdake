@@ -103,3 +103,11 @@ class ProjectService:
         db.commit()
         return True
 
+    @staticmethod
+    def reorder(db: Session, ids: List[int]) -> None:
+        """Reorder projects based on a list of IDs."""
+        for index, project_id in enumerate(ids):
+            db.query(Project).filter(Project.id == project_id).update({"order": index})
+        db.commit()
+
+

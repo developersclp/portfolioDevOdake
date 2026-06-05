@@ -52,3 +52,11 @@ class CertificateService:
         db.delete(db_cert)
         db.commit()
         return True
+
+    @staticmethod
+    def reorder(db: Session, ids: List[int]) -> None:
+        """Reorder certificates based on a list of IDs."""
+        for index, cert_id in enumerate(ids):
+            db.query(Certificate).filter(Certificate.id == cert_id).update({"order": index})
+        db.commit()
+

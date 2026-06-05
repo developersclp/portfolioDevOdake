@@ -37,7 +37,14 @@ def create_project(project_data: ProjectCreate, db: Session = Depends(get_db)):
     return ProjectService.create(db, project_data)
 
 
+@router.put("/reorder", dependencies=[Depends(get_current_admin)])
+def reorder_projects(ids: List[int], db: Session = Depends(get_db)):
+    """Reorder projects based on a list of IDs."""
+    ProjectService.reorder(db, ids)
+    return {"message": "Projetos ordenados com sucesso"}
+
 @router.put("/{project_id}", response_model=ProjectResponse, dependencies=[Depends(get_current_admin)])
+
 def update_project(
     project_id: int,
     project_data: ProjectUpdate,

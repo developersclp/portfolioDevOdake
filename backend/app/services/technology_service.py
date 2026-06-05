@@ -55,3 +55,11 @@ class TechnologyService:
         db.delete(db_tech)
         db.commit()
         return True
+
+    @staticmethod
+    def reorder(db: Session, ids: List[int]) -> None:
+        """Reorder technologies based on a list of IDs."""
+        for index, tech_id in enumerate(ids):
+            db.query(Technology).filter(Technology.id == tech_id).update({"order": index})
+        db.commit()
+

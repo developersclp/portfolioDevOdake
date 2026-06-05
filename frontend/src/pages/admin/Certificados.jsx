@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { getCertificates, createCertificate, deleteCertificate } from '../../services/api';
+import { getCertificates, createCertificate, deleteCertificate, reorderCertificates } from '../../services/api';
 import { FaTrash, FaCertificate, FaExternalLinkAlt } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 
 function Certificados() {
   const [items, setItems] = useState([]);
@@ -22,6 +23,28 @@ function Certificados() {
   };
 
   useEffect(() => { fetchData(); }, []);
+
+  const handleDragEnd = async (result) => {
+    const { source, destination } = result;
+    if (!destination) return;
+    if (source.index === destination.index) return;
+
+    const reorderedItems = Array.from(items);
+    const [movedItem] = reorderedItems.splice(source.index, 1);
+    reorderedItems.splice(destination.index, 0, movedItem);
+
+    // Atualiza localmente
+    const withNewOrders = reorderedItems.map((item, idx) => ({ ...item, order: idx }));
+    setItems(withNewOrders);
+
+    try {
+      await reorderCertificates(withNewOrders.map(item => item.id));
+    } catch (err) {
+      console.error('Erro ao reordenar certificados:', err);
+      alert('Erro ao salvar nova ordenação no servidor');
+      fetchData();
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -109,49 +132,69 @@ function Certificados() {
         </div>
 
         <div className="md:col-span-2">
-          <div className="space-y-3">
-            {items.length === 0 ? (
-              <p className="text-text-muted italic text-center py-8">Nenhum certificado cadastrado.</p>
-            ) : (
-              items.map(item => (
-                <motion.div
-                  key={item.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex items-center justify-between p-4 bg-white/5 border border-white/5 rounded-lg hover:border-white/10 transition-all"
+          <DragDropContext onDragEnd={handleDragEnd}>
+            <Droppable droppableId="certificates">
+              {(provided) => (
+                <div
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                  className="space-y-3 min-h-[100px] bg-white/[0.02] p-2 rounded-lg border border-dashed border-white/5"
                 >
-                  <div className="flex items-center gap-4 min-w-0">
-                    {item.image_url && (
-                      <div className="w-10 h-10 rounded overflow-hidden bg-black/20 flex items-center justify-center p-1 shrink-0">
-                        <img src={`${API_BASE}${item.image_url}`} alt={item.name} className="w-full h-full object-contain" />
-                      </div>
-                    )}
-                    <div className="min-w-0">
-                      <p className="font-medium text-text-primary truncate">{item.name}</p>
-                      <div className="flex items-center gap-2 mt-0.5">
-                        <span className="text-xs text-text-muted">{item.issuer}</span>
-                        {item.date && <span className="text-xs text-text-muted">• {item.date}</span>}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3 ml-4 shrink-0">
-                    {item.link && (
-                      <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-accent/50 hover:text-accent transition-colors">
-                        <FaExternalLinkAlt className="w-3.5 h-3.5" />
-                      </a>
-                    )}
-                    <button onClick={() => handleDelete(item.id)} className="text-red-400/50 hover:text-red-400 transition-colors">
-                      <FaTrash className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                </motion.div>
-              ))
-            )}
-          </div>
+                  {items.length === 0 ? (
+                    <p className="text-text-muted italic text-center py-8">Nenhum certificado cadastrado.</p>
+                  ) : (
+                    items.map((item, index) => (
+                      <Draggable key={item.id} draggableId={String(item.id)} index={index}>
+                        {(provided, snapshot) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            className={`flex items-center justify-between p-4 rounded-lg hover:border-white/10 transition-all select-none ${
+                              snapshot.isDragging 
+                              ? 'bg-accent/20 border border-accent shadow-lg shadow-accent/10' 
+                              : 'bg-white/5 border border-white/5'
+                            }`}
+                          >
+                            <div className="flex items-center gap-4 min-w-0">
+                              {item.image_url && (
+                                <div className="w-10 h-10 rounded overflow-hidden bg-black/20 flex items-center justify-center p-1 shrink-0">
+                                  <img src={`${API_BASE}${item.image_url}`} alt={item.name} className="w-full h-full object-contain" />
+                                </div>
+                              )}
+                              <div className="min-w-0">
+                                <p className="font-medium text-text-primary truncate">{item.name}</p>
+                                <div className="flex items-center gap-2 mt-0.5">
+                                  <span className="text-xs text-text-muted">{item.issuer}</span>
+                                  {item.date && <span className="text-xs text-text-muted">• {item.date}</span>}
+                                </div>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-3 ml-4 shrink-0">
+                              {item.link && (
+                                <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-accent/50 hover:text-accent transition-colors">
+                                  <FaExternalLinkAlt className="w-3.5 h-3.5" />
+                                </a>
+                              )}
+                              <button onClick={() => handleDelete(item.id)} className="text-red-400/50 hover:text-red-400 transition-colors">
+                                <FaTrash className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </Draggable>
+                    ))
+                  )}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
         </div>
       </div>
     </div>
   );
 }
+
 
 export default Certificados;
