@@ -5,8 +5,8 @@ const ProfileContext = createContext();
 
 const defaultProfile = {
   full_name: 'Pedro Odake',
-  job_title: 'Full Stack Developer',
-  biography: 'Desenvolvedor apaixonado por criar aplicações web modernas e escaláveis com React e Python.',
+  job_title: 'Desenvolvedor Full Stack',
+  biography: 'Desenvolvedor apaixonado por criar aplicações web modernas e escaláveis com Python, Java, React.',
   email: 'contato@pedroodake.com',
   github_url: 'https://github.com',
   linkedin_url: 'https://linkedin.com'

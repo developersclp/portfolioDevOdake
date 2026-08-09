@@ -19,7 +19,9 @@ function Hero() {
   // Canvas ref for particles
   const canvasRef = useRef(null);
 
-  const titles = profile?.job_title ? [profile.job_title, 'Full Stack Developer', 'Backend Specialist'] : ['Full Stack Developer', 'Backend Engineer'];
+  const titles = profile?.job_title 
+    ? Array.from(new Set([profile.job_title, 'Desenvolvedor Full Stack', 'Estudante']))
+    : ['Desenvolvedor Full Stack', 'Estudante'];
 
   useEffect(() => {
     if (loading || !profile) return;
